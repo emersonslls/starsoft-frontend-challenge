@@ -1,8 +1,10 @@
+/* <---- SCSS ----> */
+import '../../styles/components/_footer.scss';
+
 export function Footer() {
-    return (
-      <footer>
-        <p>Meu Footer</p>
-      </footer>
-    );
-  }
-  
+  return (
+    <footer className="footer">
+      <p>STARSOFT © TODOS OS DIREITOS RESERVADOS</p>
+    </footer>
+  );
+}
