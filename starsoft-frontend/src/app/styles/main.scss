@@ -1,25 +1,21 @@
+@use 'base/variables';
+@use 'base/mixins';
+@use 'base/functions';
 
-@import 'base/variables';
-@import 'base/mixins';
-@import 'base/functions';
+@use 'global/reset';
+@use 'global/typography';
+@use 'global/global';
 
-@import 'global/reset';
-@import 'global/typography';
-@import 'global/global';
+@use 'components/header';
+@use 'components/footer';
+@use 'components/button';
 
-@import 'components/header';
-@import 'components/footer';
-@import 'components/button';
+@use 'layout/grid';
+@use 'layout/container';
 
-@import 'layout/grid';
-@import 'layout/container';
+@use 'pages/home';
+@use 'pages/product';
+@use 'pages/cart';
 
-@import 'pages/home';
-@import 'pages/product';
-@import 'pages/cart';
-
-@import 'themes/light';
-@import 'themes/dark';
-
-@import 'utils/helpers';
-@import 'utils/animations';
+@use 'utils/helpers';
+@use 'utils/animations';

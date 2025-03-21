@@ -1,1 +1,13 @@
+header {
+    margin: 0 auto;
+    width: 100%;
+    height: 100px;
 
+    background: var(--carvao-escuro);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.21);
+
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}

@@ -1,0 +1,14 @@
+.Container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+    gap: 189px;
+
+    position: relative;
+    width: 100%;
+    height: 1985px;
+
+    background: var(--carvao-escuro);
+}
