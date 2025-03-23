@@ -1,0 +1,230 @@
+.container-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 49px;
+
+    width: 345px;
+    height: 555px;
+
+    background: var(--preto-quase-total);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+    border-radius: var(--borda);
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.nft-image {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 31px;
+
+    width: 345px;
+    height: 258px;
+
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+
+    .nft-img {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0px;
+        gap: 19px;
+
+        width: 296px;
+        height: 258px;
+
+        background: var(--background-nft);
+        border-radius: var(--borda);
+
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+
+        .nft {
+            width: auto;
+            height: auto;
+
+            border-radius: 4px;
+
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+
+        }
+    }
+
+
+}
+
+.nft-inforrmacao {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 19px;
+
+    width: 345px;
+    height: 196px;
+
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+
+    .nft-dados {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px;
+        gap: 10px;
+
+        width: 296px;
+        height: 196px;
+
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+
+        .nft-nome {
+            width: auto;
+            height: 25px;
+
+            font-family: var(--font-principal);
+            font-style: normal;
+            font-weight: 500;
+            font-size: var(--font-size-sm);
+            line-height: 25px;
+
+            color: var(--branco);
+
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+        }
+
+        .nft-descricao {
+            width: auto;
+            height: 12px;
+
+            font-family: var(--font-principal);
+            font-style: normal;
+            font-weight: 300;
+            font-size: var(--font-size-xxs);
+            line-height: 12px;
+
+            color: var(--cinza-claro);
+
+            flex: none;
+            order: 1;
+            flex-grow: 0;
+        }
+
+        .nft-compra {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 20px 0px 0px;
+            gap: 24px;
+
+            width: 296px;
+            height: 139px;
+
+            flex: none;
+            order: 2;
+            flex-grow: 0;
+
+            .nft-preco {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                padding: 0px;
+                gap: 10px;
+
+                width: auto;
+                height: 29px;
+
+                flex: none;
+                order: 0;
+                flex-grow: 0;
+
+                .Ethereum {
+                    width: 29px;
+                    height: 29px;
+
+                    flex: none;
+                    order: 0;
+                    flex-grow: 0;
+                }
+
+                h1 {
+                    width: auto;
+                    height: 22px;
+
+                    font-family: var(--font-principal);
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: var(--font-size-md);
+                    line-height: 22px;
+
+                    color: var(--branco-quase-total);
+
+                    flex: none;
+                    order: 1;
+                    flex-grow: 0;
+                }
+            }
+
+            .btn-comprar-adicionarCarrinho {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                padding: 10px 26px;
+                gap: 10px;
+
+                width: 296px;
+                height: 66px;
+
+                background: var(--button);
+                border-radius: var(--borda);
+                border: none;
+                cursor: pointer;
+
+                flex: none;
+                order: 1;
+                align-self: stretch;
+                flex-grow: 0;
+
+                font-family: var(--font-principal);
+                font-style: normal;
+                font-weight: 600;
+                font-size: var(--font-size-base);
+                line-height: 22px;
+
+                color: var(--branco);
+
+                flex: none;
+                order: 0;
+                flex-grow: 0;
+
+                &.adicionado {
+                    background-color: var(--laranja-principal);
+                }
+            }
+
+        }
+    }
+}

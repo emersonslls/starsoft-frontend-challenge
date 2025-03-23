@@ -15,13 +15,16 @@ export function Header() {
         className="Logo"
       />
       <div className='container-bag'>
-        <Image
+        <div className='container-icon'>
+           <Image
           src="/assets/Icons/Bag.svg"
           alt="Bag"
-          width={33}
-          height={33}
+          width={30}
+          height={30}
           className="BagIcon"
         />
+        </div>
+       
         <p>0</p>
       </div>
     </header>

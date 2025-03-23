@@ -1,1 +1,69 @@
+.container-NFT {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    padding: 0px;
+    gap: 25px;
 
+    width: 1455px;
+    height: 1135px;
+    position: absolute;
+    left: calc(50% - 1455px / 2);
+    top: calc(50% - 1135px / 2 - 89px);
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+@media (max-width: 1440px) {
+    .container-NFT {
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        gap: 25px;
+
+        width: 1200px; 
+        height: auto;  
+        left: calc(50% - 1200px / 2);
+        top: calc(50% - 1715px / 2 - 89px); 
+
+        background-color: rgb(4, 255, 0);
+    }
+}
+
+@media (max-width: 1024px) {
+    .container-NFT {
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        gap: 25px;
+
+        width: 100%; 
+        height: auto;  
+        left: 0; 
+        top: 280px;
+
+        background-color: red;
+    }
+}
+
+@media (max-width: 780px) {
+    .container-NFT {
+        display: flex;
+        flex-direction: column;  // Muda a direção para coluna (um card abaixo do outro)
+        justify-content: center;
+        align-items: center;
+        padding: 0px;
+        gap: 25px;
+
+        width: 100%; 
+        height: auto; 
+        left: 0;
+        top: 289px;  
+
+        background-color: fuchsia;
+    }
+}

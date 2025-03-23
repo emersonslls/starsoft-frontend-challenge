@@ -4,11 +4,30 @@
     justify-content: space-between;
     align-items: center;
     padding: 0px;
-    gap: 189px;
 
     position: relative;
     width: 100%;
     height: 1985px;
 
+    overflow: hidden;
+
     background: var(--carvao-escuro);
+}
+
+@media (max-width: 1440px) {
+    .Container {
+        height: 2471px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .Container {
+        height: 3471px;
+    }
+}
+
+@media (max-width: 780px) {
+    .Container {
+        height: 5471px;
+    }
 }

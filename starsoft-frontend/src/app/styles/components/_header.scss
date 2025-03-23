@@ -2,18 +2,16 @@ header {
     position: relative;
     width: 100%;
     height: 100px;
-
     background: var(--carvao-escuro);
     border-bottom: 1px solid rgba(255, 255, 255, 0.21);
-
     overflow: hidden;
 
-    & .Logo {
+    .Logo {
         position: absolute;
         width: 101px;
         height: 38px;
         left: 41px;
-        top: calc(50% - 38px/2 + 2px);
+        top: calc(50% - 38px / 2 + 2px);
     }
 }
 
@@ -21,17 +19,40 @@ header {
     display: flex;
     align-items: center;
     gap: 9px;
-
     position: absolute;
     width: 54px;
     height: 33px;
     right: 43px;
     top: calc(50% - 33px / 2);
 
-    .BagIcon {
+    .container-icon {
         width: 33px;
         height: 33px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         object-fit: contain;
+        background: transparent;
+        transition: background-color 0.3s ease;
+
+        cursor: pointer;
+
+        .BagIcon {
+            width: 30px;
+            height: 30px;
+            transition: filter 0.3s ease;
+        }
+
+        /* !-- ANIMAÇÃO HOVER --! */
+
+        &:hover {
+            background-color: var(--laranja-principal);
+            border-radius: 8px;
+
+            .BagIcon {
+                filter: brightness(0) invert(1);
+            }
+        }
     }
 
     p {

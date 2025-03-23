@@ -34,4 +34,9 @@
             top: calc(50% - 40px/2);
         }
     }
+
+    & p:hover{
+        color: var(--cinza-claro);
+        cursor: pointer;
+    }
 }
