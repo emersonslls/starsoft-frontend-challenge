@@ -16,6 +16,8 @@
     flex: none;
     order: 1;
     flex-grow: 0;
+
+    background-color: rgb(251, 255, 0);
 }
 
 @media (max-width: 1440px) {
@@ -53,7 +55,7 @@
 @media (max-width: 780px) {
     .container-NFT {
         display: flex;
-        flex-direction: column;  // Muda a direção para coluna (um card abaixo do outro)
+        flex-direction: column;  
         justify-content: center;
         align-items: center;
         padding: 0px;

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./styles/main.scss";
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ReactQueryProvider from '../providers/ReactQueryProvider'; // Importando o ReactQueryProvider
 
 export const metadata: Metadata = {
   title: "Marketplace de NFTs | StarSoft",
@@ -10,19 +10,12 @@ export const metadata: Metadata = {
   },
 };
 
-// Criando uma instância do QueryClient
-const queryClient = new QueryClient();
-
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">
-      <body className={'antialiased'}>
-        {/* Envolvendo a aplicação com o QueryClientProvider */}
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
+      <body>
+        {/* Usando o ReactQueryProvider para fornecer o cliente do React Query */}
+        <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>
   );
