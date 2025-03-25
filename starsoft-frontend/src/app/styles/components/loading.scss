@@ -1,0 +1,47 @@
+.loadingContainer {
+    width: 1455px;
+    height: 1135px;
+    position: absolute;
+    left: calc(50% - 1455px / 2);
+    top: calc(50% - 1135px / 2 - 89px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: transparent;
+    z-index: 9999;
+    /* Para ficar acima de outros conteúdos */
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid var(--carvao-escuro);
+    border-top: 6px solid var(--laranja-principal);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+h1 {
+    width: auto;
+    height: 25px;
+
+    font-family: var(--font-principal);
+    font-style: normal;
+    font-weight: 500;
+    font-size: var(--font-size-sm);
+    line-height: 25px;
+
+    color: var(--branco);
+
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

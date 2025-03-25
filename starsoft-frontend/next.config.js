@@ -1,6 +1,11 @@
 // next.config.js
 module.exports = {
   images: {
-    domains: ['via.placeholder.com'], // Adicione esse domínio
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+      },
+    ],
   },
 };

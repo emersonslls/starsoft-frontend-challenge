@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./styles/main.scss";
-import ReactQueryProvider from '../providers/ReactQueryProvider'; // Importando o ReactQueryProvider
+import ReactQueryProvider from '../providers/ReactQueryProvider'; 
 
 export const metadata: Metadata = {
   title: "Marketplace de NFTs | StarSoft",

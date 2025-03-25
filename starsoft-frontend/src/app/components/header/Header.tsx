@@ -44,7 +44,7 @@ export function Header({ addToCartCount }: HeaderProps) {
         height={33}
         className="Logo"
       />
-      <div className="container-bag" onClick={toggleCart}>
+      <div className="container-bag" onClick={toggleCart} aria-label="Abrir Carrinho">
         <div className="container-icon">
           <Image
             src="/assets/Icons/Bag.svg"
@@ -61,7 +61,9 @@ export function Header({ addToCartCount }: HeaderProps) {
       {isCartOpen && (
         <>
           <div className="cart-overlay" onClick={closeCart}/> {/* Camada de fundo escuro e blur */}
-          <Cart closeCart={closeCart} />
+          <div className="cart-container" onClick={(e) => e.stopPropagation()}> {/* Evita fechar o carrinho ao clicar dentro dele */}
+            <Cart closeCart={closeCart} />
+          </div>
         </>
       )}
     </header>

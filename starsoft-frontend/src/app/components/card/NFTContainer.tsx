@@ -1,9 +1,8 @@
-'use client';
-
 import { useQuery } from '@tanstack/react-query';
 import { fetchNFTs } from '../../service/api';
 import CardNFT from './NFTCard';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState, useEffect } from 'react';
+import LoadingScreen from '../loading/Loading';
 
 interface NFT {
   id: number;
@@ -11,101 +10,62 @@ interface NFT {
   descricao: string;
   preco: number | string;
   imagem: string;
-  icone: string;
 }
 
 interface NFTContainerProps {
   setCartCount: Dispatch<SetStateAction<number>>;
 }
 
-const exemploNFTs: NFT[] = [
-  {
-    id: 1,
-    nome: 'Galaxy Ape',
-    descricao: 'Um NFT cósmico cheio de estilo!',
-    preco: 45,
-    imagem: '/assets/NFTS/img1.png',
-    icone: '/assets/Icons/Ethereum.svg',
-  },
-  {
-    id: 2,
-    nome: 'Cyber Cat',
-    descricao: 'Gato digital do futuro, pronto pra ação.',
-    preco: 38,
-    imagem: '/assets/NFTS/img2.png',
-    icone: '/assets/Icons/Ethereum.svg',
-  },
-  {
-    id: 3,
-    nome: 'Pixel Dragon',
-    descricao: 'Dragão pixelado que guarda tesouros raros.',
-    preco: 60,
-    imagem: '/assets/NFTS/img3.png',
-    icone: '/assets/Icons/Ethereum.svg',
-  },
-  {
-    id: 4,
-    nome: 'Meta Punk',
-    descricao: 'Estilo retrô com alma de NFT.',
-    preco: 50,
-    imagem: '/assets/NFTS/img4.png',
-    icone: '/assets/Icons/Ethereum.svg',
-  },
-  {
-    id: 5,
-    nome: 'Meta Punk',
-    descricao: 'Estilo retrô com alma de NFT.',
-    preco: 50,
-    imagem: '/assets/NFTS/img4.png',
-    icone: '/assets/Icons/Ethereum.svg',
-  },
-  {
-    id: 6,
-    nome: 'Meta Punk',
-    descricao: 'Estilo retrô com alma de NFT.',
-    preco: 50,
-    imagem: '/assets/NFTS/img4.png',
-    icone: '/assets/Icons/Ethereum.svg',
-  },
-  {
-    id: 7,
-    nome: 'Meta Punk',
-    descricao: 'Estilo retrô com alma de NFT.',
-    preco: 50,
-    imagem: '/assets/NFTS/img4.png',
-    icone: '/assets/Icons/Ethereum.svg',
-  },
-  {
-    id: 8,
-    nome: 'Meta Punk',
-    descricao: 'Estilo retrô com alma de NFT.',
-    preco: 50,
-    imagem: '/assets/NFTS/img4.png',
-    icone: '/assets/Icons/Ethereum.svg',
-  },
-];
-
 export default function NFTContainer({ setCartCount }: NFTContainerProps) {
-  const { data, isLoading, isError } = useQuery<NFT[]>({
+  const { data, isLoading, isError, error } = useQuery<NFT[]>({
     queryKey: ['nfts'],
     queryFn: fetchNFTs,
   });
 
-  const nftsParaExibir = data?.length ? data : exemploNFTs;
+  const [isDelayedLoading, setIsDelayedLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsDelayedLoading(false);
+    }, 5000); // Simula o atraso de 5 segundos
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isError) {
+    console.error('Erro ao carregar as NFTs:', error);
+    return (
+      <div>
+        Erro ao carregar as NFTs: {error instanceof Error ? error.message : 'Erro desconhecido'}
+      </div>
+    );
+  }
+
+  // Verificando os dados recebidos
+  console.log('NFTs recebidas:', data);
+
+  const nftsParaExibir = Array.isArray(data) && data.length ? data.slice(0, 8) : [];
+
+  if (isDelayedLoading || isLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="container-NFT">
-      {nftsParaExibir.map((nft) => (
-        <CardNFT
-          key={nft.id}
-          nome={nft.nome}
-          descricao={nft.descricao}
-          preco={nft.preco}
-          imagem={nft.imagem}
-          imagemIcone={nft.icone}
-          setCartCount={setCartCount}
-        />
-      ))}
+      {nftsParaExibir.length === 0 ? (
+        <div>Desculpe, nenhuma NFT disponível no momento. Tente novamente mais tarde.</div>
+      ) : (
+        nftsParaExibir.map((nft) => (
+          <CardNFT
+            key={nft.id}
+            nome={nft.nome}
+            descricao={nft.descricao}
+            preco={nft.preco}
+            imagem={nft.imagem || '/fallback-image.png'}
+            setCartCount={setCartCount}
+          />
+        ))
+      )}
     </div>
   );
 }

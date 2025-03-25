@@ -1,9 +1,12 @@
 'use client';
+
 import { motion, AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction, useState } from 'react';
 import Image from 'next/image';
-import '../../styles/components/_cards.scss';
 
+// Importando o ícone de Ethereum
+import imagemIcone from '../../../../public/assets/Icons/Ethereum.svg';
+import '../../styles/components/_cards.scss';
 import SuccessMessage from '../Messages/success';
 
 interface CardNFTProps {
@@ -11,21 +14,31 @@ interface CardNFTProps {
     descricao: string;
     preco: number | string;
     imagem: string;
-    imagemIcone: string;
     setCartCount: Dispatch<SetStateAction<number>>;
 }
+
+// Função de formatação de preço
+const formatarPreco = (preco: number | string) => {
+    if (typeof preco === 'number') {
+        return preco % 1 === 0 ? preco.toString() : preco.toFixed(2);
+    }
+    const valor = parseFloat(preco);
+    return isNaN(valor)
+        ? preco
+        : valor % 1 === 0
+            ? valor.toString()
+            : valor.toFixed(2);
+};
 
 export default function CardNFT({
     nome,
     descricao,
     preco,
     imagem,
-    imagemIcone,
     setCartCount,
 }: CardNFTProps) {
     const [estadoBotao, setEstadoBotao] = useState<'comprar' | 'adicionar'>('comprar');
     const [mensagemSucesso, setMensagemSucesso] = useState(false);
-
     const [mostrarMensagem, setMostrarMensagem] = useState(false);
 
     const handleClick = () => {
@@ -43,26 +56,14 @@ export default function CardNFT({
         }
     };
 
-    const formatarPreco = (preco: number | string) => {
-        if (typeof preco === 'number') {
-            return preco % 1 === 0 ? preco.toString() : preco.toFixed(2);
-        }
-        const valor = parseFloat(preco);
-        return isNaN(valor)
-            ? preco
-            : valor % 1 === 0
-                ? valor.toString()
-                : valor.toFixed(2);
-    };
-
     return (
         <div className="container-card">
             <div className="nft-image">
                 <div className="nft-img">
-                    <Image src={imagem} alt="Produto" width={200} height={200} className="nft" />
+                    <Image src={imagem} alt={nome} width={200} height={200} className="nft" />
                 </div>
             </div>
-            <div className="nft-inforrmacao">
+            <div className="nft-info">
                 <div className="nft-dados">
                     <h1 className="nft-nome">{nome}</h1>
                     <p className="nft-descricao">{descricao}</p>
@@ -70,7 +71,7 @@ export default function CardNFT({
                         <div className="nft-preco">
                             <Image
                                 src={imagemIcone}
-                                alt="Ícone"
+                                alt="Ícone Ethereum"
                                 width={30}
                                 height={30}
                                 className="Ethereum"
@@ -78,7 +79,7 @@ export default function CardNFT({
                             <h1>{formatarPreco(preco)} ETH</h1>
                         </div>
 
-                        {/* BOTÃO */}
+                        {/* Botão */}
                         <motion.button
                             className={`btn-comprar-adicionarCarrinho ${estadoBotao === 'adicionar' ? 'adicionado' : ''}`}
                             whileTap={{ scale: 0.95 }}
@@ -98,12 +99,12 @@ export default function CardNFT({
                             </AnimatePresence>
                         </motion.button>
 
-                        {/* MENSAGEM DE SUCESSO */}
+                        {/* Mensagem de Sucesso */}
                         <SuccessMessage show={mostrarMensagem} onClose={() => setMostrarMensagem(false)} />
-
                     </div>
                 </div>
             </div>
+
         </div>
     );
 }
