@@ -5,6 +5,7 @@ import React, {useEffect} from "react";
 import '../../styles/components/sucessMessage.scss';
 import { CheckCircle } from "lucide-react"; 
 
+
 import { motion, AnimatePresence } from "framer-motion";
 
 interface SuccessMessageProps {

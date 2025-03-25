@@ -4,6 +4,7 @@ import "./styles/pages/home.scss";
 import { Header } from "./components/header/Header";
 import { Footer } from "./components/footer/Footer";
 import NFTContainer from "./components/card/NFTContainer";
+import Button from './components/button/Button';
 
 export default function Home() {
   const [cartCount, setCartCount] = useState(0);
@@ -12,6 +13,7 @@ export default function Home() {
     <div className="Container">
       <Header addToCartCount={cartCount} />
       <NFTContainer setCartCount={setCartCount} />
+      <Button />
       <Footer />
     </div>
   );

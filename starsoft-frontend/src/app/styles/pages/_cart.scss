@@ -1,10 +1,112 @@
+.cart {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    z-index: 9;
+}
+
+.cart-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 8;
+}
+
 .container-cart {
     position: absolute;
     width: 679px;
     height: 100vh;
-    left: 0;
-
+    right: 0;
     z-index: 99;
+    background-color: var(--carvao-escuro);
+    box-shadow: -29px 0px 9.8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    padding-top: 20px;
+}
 
-    background-color: aqua;
+.header-cart {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 84px;
+    position: absolute;
+    width: 397px;
+    height: 60px;
+    left: 40px;
+    top: 65px;
+
+    .btn-close {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        width: 60px;
+        height: 60px;
+        border-radius: 100%;
+        cursor: pointer;
+        border: none;
+        background-color: var(--cinza-button);
+
+        .icon {
+            color: var(--laranja-principal);
+        }
+    }
+
+    h1 {
+        width: auto;
+        height: 26px;
+        font-family: var(--font-principal);
+        font-style: normal;
+        font-weight: 500;
+        font-size: var(--font-size-lg);
+        line-height: 26px;
+        color: var(--branco);
+    }
+}
+
+@media (max-width:1440px) {
+    .container-cart {
+        width: 650px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .container-cart {
+        width: 550px;
+    }
+}
+
+@media (max-width: 780px) {
+    .container-cart {
+        width: 100%;
+    }
+
+    .header-cart {
+        gap: 60px;
+        width: 330px;
+        height: 40px;
+        left: calc(50% - 330px/2);
+        top: 45px;
+
+        .btn-close {
+            width: 40px;
+            height: 40px;
+
+            .icon {
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        h1 {
+            height: 26px;
+            font-size: var(--font-size-md);
+            line-height: 22px;
+        }
+    }
 }

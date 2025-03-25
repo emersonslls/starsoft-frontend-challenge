@@ -16,14 +16,17 @@ export function Header({ addToCartCount }: HeaderProps) {
     setIsCartOpen(!isCartOpen);
   };
 
+  // Função para fechar o carrinho e restaurar o scroll
+  const closeCart = () => {
+    setIsCartOpen(false);
+    document.body.style.overflow = 'auto'; // Restaura o scroll quando o carrinho é fechado
+  };
+
   // Efeito colateral para manipular o scroll
   useEffect(() => {
     if (isCartOpen) {
       // Desativa o scroll quando o carrinho está aberto
       document.body.style.overflow = 'hidden';
-    } else {
-      // Restaura o scroll quando o carrinho está fechado
-      document.body.style.overflow = 'auto';
     }
 
     // Limpeza do efeito para restaurar o estado original quando o componente for desmontado
@@ -55,7 +58,12 @@ export function Header({ addToCartCount }: HeaderProps) {
       </div>
 
       {/* Exibe o carrinho quando isCartOpen for true */}
-      {isCartOpen && <Cart />}
+      {isCartOpen && (
+        <>
+          <div className="cart-overlay" onClick={closeCart}/> {/* Camada de fundo escuro e blur */}
+          <Cart closeCart={closeCart} />
+        </>
+      )}
     </header>
   );
 }
