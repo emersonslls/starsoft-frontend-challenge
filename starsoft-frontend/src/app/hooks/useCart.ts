@@ -1,35 +1,53 @@
-// hooks/useCart.ts
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../redux/store';  // Certifique-se de que o caminho esteja correto
-import { addToCart, removeFromCart, clearCart } from '../redux/cartSlice';
+import { useState } from 'react';
+import { CartItem } from '../redux/cartSlice';
 
-interface CartItem {
-  id: string;
-  nome: string;
-  preco: number;
-  quantidade: number;
-}
+export function useCart() {
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-export const useCart = () => {
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state: RootState) => state.cart.items);
-
-  const addToCartHandler = (item: CartItem) => {
-    dispatch(addToCart(item));  // Despachando a ação de adicionar item ao carrinho
+  const addToCart = (item: CartItem) => {
+    setCartItems((prev) => {
+      const exists = prev.find((i) => i.id === item.id);
+      if (exists) {
+        return prev.map((i) =>
+          i.id === item.id ? { ...i, quantidade: i.quantidade + 1 } : i
+        );
+      }
+      return [...prev, { ...item, quantidade: 1 }];
+    });
   };
 
-  const removeFromCartHandler = (id: string) => {
-    dispatch(removeFromCart(id));  // Despachando a ação de remover item do carrinho
+  const removeFromCart = (id: string) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const clearCartHandler = () => {
-    dispatch(clearCart());  // Despachando a ação de limpar o carrinho
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
+  const increaseQuantity = (id: string) => {
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, quantidade: item.quantidade + 1 } : item
+      )
+    );
+  };
+
+  const decreaseQuantity = (id: string) => {
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === id && item.quantidade > 1
+          ? { ...item, quantidade: item.quantidade - 1 }
+          : item
+      )
+    );
   };
 
   return {
     cartItems,
-    addToCart: addToCartHandler,
-    removeFromCart: removeFromCartHandler,
-    clearCart: clearCartHandler,
+    addToCart,
+    removeFromCart,
+    clearCart,
+    increaseQuantity,
+    decreaseQuantity,
   };
-};
+}

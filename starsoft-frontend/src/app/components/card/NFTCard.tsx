@@ -1,41 +1,35 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { Dispatch, SetStateAction, useState } from 'react';
-import Image from 'next/image';
-import { useCart } from '@/app/hooks/useCart';  // Corrija o caminho conforme necessário
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, CartItem } from '../../redux/cartSlice';
+import { RootState } from '../../redux/store';
 
-// Importando o ícone de Ethereum
-import imageIcone from '../../../../public/assets/Icons/Ethereum.svg';
 import '../../styles/components/_cards.scss';
+
+import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react';
+import Image from 'next/image';
+
+import imageIcone from '../../../../public/assets/Icons/Ethereum.svg';
+
 import SuccessMessage from '../Messages/success';
 
+// Definir o tipo das props do CardNFT
 interface CardNFTProps {
   name: string;
   description: string;
-  price: number | string;
+  price: string | number;
   image: string;
-  setCartCount: Dispatch<SetStateAction<number>>;  // Adicionando setCartCount aqui
+  setCartCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const formatarPreco = (preco: number | string) => {
-  if (typeof preco === 'number') {
-    return preco % 1 === 0 ? preco.toString() : preco.toFixed(2);
-  }
-  const valor = parseFloat(preco);
-  return isNaN(valor)
-    ? preco
-    : valor % 1 === 0
-    ? valor.toString()
-    : valor.toFixed(2);
+const formatarPreco = (preco: string | number) => {
+  const precoNumerico = typeof preco === 'string' ? parseFloat(preco) : preco;
+  return precoNumerico % 1 === 0 ? precoNumerico.toFixed(0) : precoNumerico.toFixed(2); // Verifica se é inteiro
 };
 
-export default function CardNFT({
-  name,
-  description,
-  price,
-  image,
-  setCartCount,  // Usando setCartCount aqui
-}: CardNFTProps) {
-  const { addToCart } = useCart();  // Usando o hook useCart
+const CardNFT = ({ name, description, price, image, setCartCount }: CardNFTProps) => {
+  const dispatch = useDispatch();
+  const cart = useSelector((state: RootState) => state.cart.items);
+
   const [estadoBotao, setEstadoBotao] = useState<'comprar' | 'adicionar'>('comprar');
   const [mensagemSucesso, setMensagemSucesso] = useState(false);
   const [mostrarMensagem, setMostrarMensagem] = useState(false);
@@ -44,17 +38,18 @@ export default function CardNFT({
     if (estadoBotao === 'comprar') {
       setEstadoBotao('adicionar');
     } else if (estadoBotao === 'adicionar') {
-      addToCart({
-        id: name,  // Usando o 'name' como ID (ou você pode usar um ID único)
+      const item: CartItem = {
+        id: `${name}-${Math.random()}`,  // Garante um ID único
         nome: name,
-        preco: typeof price === 'string' ? parseFloat(price) : price, // Garantindo que o preco seja sempre um número
+        preco: typeof price === 'string' ? parseFloat(price) : price,
         quantidade: 1,
-      });
-      
-      setCartCount((prev) => prev + 1);  // Atualiza o contador de itens no carrinho
+        descricao: description,
+        image: image,
+      };
+      dispatch(addToCart(item));
+      setCartCount((prev) => prev + 1);
       setMostrarMensagem(true);
 
-      // Oculta a mensagem após 2.5 segundos
       setTimeout(() => {
         setMostrarMensagem(false);
         setEstadoBotao('comprar');
@@ -92,7 +87,6 @@ export default function CardNFT({
               <h1>{formatarPreco(price)} ETH</h1>
             </div>
 
-            {/* Botão */}
             <motion.button
               className={`btn-comprar-adicionarCarrinho ${estadoBotao === 'adicionar' ? 'adicionado' : ''}`}
               whileTap={{ scale: 0.95 }}
@@ -112,11 +106,13 @@ export default function CardNFT({
               </AnimatePresence>
             </motion.button>
 
-            {/* Mensagem de Sucesso */}
+            {/* Certifique-se de ter o componente SuccessMessage importado corretamente */}
             <SuccessMessage show={mostrarMensagem} onClose={() => setMostrarMensagem(false)} />
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default CardNFT;

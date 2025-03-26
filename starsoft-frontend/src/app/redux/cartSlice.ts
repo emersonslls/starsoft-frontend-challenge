@@ -1,11 +1,12 @@
-// redux/cartSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface CartItem {
+export interface CartItem {
   id: string;
   nome: string;
+  descricao: string;
   preco: number;
   quantidade: number;
+  image: string;
 }
 
 interface CartState {
@@ -29,8 +30,20 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.items = [];
     },
+    increaseQuantity: (state, action: PayloadAction<string>) => {
+      const item = state.items.find(item => item.id === action.payload);
+      if (item) {
+        item.quantidade += 1;
+      }
+    },
+    decreaseQuantity: (state, action: PayloadAction<string>) => {
+      const item = state.items.find(item => item.id === action.payload);
+      if (item && item.quantidade > 1) {
+        item.quantidade -= 1;
+      }
+    },
   },
 });
 
-export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart, increaseQuantity, decreaseQuantity } = cartSlice.actions;
 export default cartSlice.reducer;

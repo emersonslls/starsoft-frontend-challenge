@@ -1,6 +1,8 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import "./styles/main.scss";
 import ReactQueryProvider from '../providers/ReactQueryProvider'; 
+import ReduxProvider from '../providers/ReduxProvider';
 
 export const metadata: Metadata = {
   title: "Marketplace de NFTs | StarSoft",
@@ -14,8 +16,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR">
       <body>
-        {/* Usando o ReactQueryProvider para fornecer o cliente do React Query */}
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <ReduxProvider>
+          <ReactQueryProvider>
+            {children}
+          </ReactQueryProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

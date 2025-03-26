@@ -1,12 +1,12 @@
-'use client';
-
 import React, { useState } from 'react';
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Trash2 } from "lucide-react";
 import { motion, AnimatePresence } from 'framer-motion';
-import '../../styles/pages/_cart.scss';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/app/redux/store';
+import { clearCart, removeFromCart, increaseQuantity, decreaseQuantity } from '../../redux/cartSlice';
+import { CartItem } from '../../redux/cartSlice';  // Importe o tipo CartItem
 import SuccessBuyMessage from '@/app/components/Messages/sucessebuy';
-import { useCart } from '../../hooks/useCart'; // Ajuste o caminho conforme necessário
+import '../../styles/pages/_cart.scss';
 
 interface CartProps {
     closeCart: () => void;
@@ -14,49 +14,67 @@ interface CartProps {
 
 export default function Cart({ closeCart }: CartProps) {
     const [mostrarMensagem, setMostrarMensagem] = useState(false);
-    const { cartItems, removeFromCart, clearCart } = useCart();  // Desestruturando o hook useCart
+    const dispatch = useDispatch();
+
+    // Acessando os itens do carrinho no Redux
+    const cartItems = useSelector((state: RootState) => state.cart.items);
 
     const handleClick = () => {
         setMostrarMensagem(true);
-
-        // Esvaziar o carrinho
-        clearCart();  // Usando o método clearCart do hook para esvaziar o carrinho
+        dispatch(clearCart()); // Chamando a ação para limpar o carrinho
 
         setTimeout(() => {
             setMostrarMensagem(false);
-            closeCart(); // Fecha o carrinho automaticamente
+            closeCart();
         }, 2500);
     };
 
+    const total: number = cartItems.reduce((total: number, item: CartItem) => total + item.preco * item.quantidade, 0);
+
     return (
         <>
-            {/* Mensagem de Sucesso - fora do carrinho */}
             <SuccessBuyMessage show={mostrarMensagem} onClose={() => setMostrarMensagem(false)} />
 
             <div className="cart">
                 <div className="container-cart">
                     <div className="header-cart">
                         <button onClick={closeCart} className="btn-close">
-                            <ArrowLeft size={28} strokeWidth={2} className="icon" />
+                            <ArrowLeft size={28} className="icon" />
                         </button>
                         <h1>Mochila de Compras</h1>
                     </div>
 
                     <section className="container-infoCompra">
                         <div className="container-itens">
-                            {/* Exibindo os itens do carrinho */}
-                            {cartItems.map(item => (
-                                <div key={item.id}>
-                                    <h3>{item.nome}</h3>
-                                    <p>{item.quantidade} x {item.preco} ETH</p>
-                                    <button onClick={() => removeFromCart(item.id)}>Remover</button>
+                            {cartItems.map((item: CartItem) => (
+                                <div className="cart-item" key={item.id}>
+                                    <img src={item.image} alt={item.nome} className="item-image" />
+                                    <div className="item-info">
+                                        <h3>{item.nome}</h3>
+                                        <p>{item.descricao}</p>
+                                        <div className="price-row">
+                                            <span className="eth-icon">Ξ</span>
+                                            <strong>{item.preco} ETH</strong>
+                                        </div>
+                                        <div className="quantity-control">
+                                            <button onClick={() => dispatch(decreaseQuantity(item.id))}>-</button>
+                                            <span>{item.quantidade}</span>
+                                            <button onClick={() => dispatch(increaseQuantity(item.id))}>+</button>
+                                        </div>
+                                    </div>
+                                    <button className="btn-remove" onClick={() => dispatch(removeFromCart(item.id))}>
+                                        🗑️
+                                    </button>
                                 </div>
                             ))}
                         </div>
 
                         <div className="total">
                             <h1>TOTAL</h1>
-                            <h2>{cartItems.reduce((total, item) => total + item.preco * item.quantidade, 0)} ETH</h2>
+                            <div className="preco-total">
+                                <img src="/eth-icon.svg" alt="ETH" className="eth-icon" />
+                                <h2>{total} ETH</h2>
+                            </div>
                         </div>
 
                         <motion.button
