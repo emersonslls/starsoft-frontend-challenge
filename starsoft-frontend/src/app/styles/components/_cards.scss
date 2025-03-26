@@ -115,17 +115,13 @@
 
         .nft-descricao {
             width: 100%;
-            /* Ou defina um valor fixo se necessário */
             height: auto;
-            /* Deixe a altura ser automática */
 
             font-family: var(--font-principal);
             font-style: normal;
             font-weight: 300;
             font-size: var(--font-size-xs);
-            /* Ajuste o tamanho da fonte conforme necessário */
             line-height: 1.2;
-            /* Ajuste o espaçamento entre as linhas */
 
             color: var(--cinza-claro);
 
@@ -134,11 +130,8 @@
             flex-grow: 0;
 
             overflow: hidden;
-            /* Esconde o excesso de texto */
             text-overflow: ellipsis;
-            /* Adiciona reticências ao final */
             white-space: nowrap;
-            /* Impede que o texto quebre em várias linhas */
         }
 
         .nft-compra {

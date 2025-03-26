@@ -1,15 +1,21 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '@/app/redux/store'; // Importe o estado global do Redux
+import { clearCart } from '@/app/redux/cartSlice'; // Importe a ação clearCart
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import '../../styles/components/_header.scss';
-
 import Cart from '@/app/pages/cart';
 
-interface HeaderProps {
-  addToCartCount: number;
-}
+import { motion, AnimatePresence } from 'framer-motion';
 
-export function Header({ addToCartCount }: HeaderProps) {
+
+export function Header() {
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  // Acessa o número total de itens no carrinho via Redux
+  const cartItemCount = useSelector((state: RootState) => state.cart.items.reduce((total, item) => total + item.quantidade, 0));
+
+  const dispatch = useDispatch();
 
   // Função para alternar a visibilidade do carrinho
   const toggleCart = () => {
@@ -25,15 +31,19 @@ export function Header({ addToCartCount }: HeaderProps) {
   // Efeito colateral para manipular o scroll
   useEffect(() => {
     if (isCartOpen) {
-      // Desativa o scroll quando o carrinho está aberto
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden'; // Desativa o scroll quando o carrinho está aberto
     }
 
-    // Limpeza do efeito para restaurar o estado original quando o componente for desmontado
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = 'auto'; // Restaura o scroll quando o carrinho é fechado
     };
-  }, [isCartOpen]); // Dependência de isCartOpen
+  }, [isCartOpen]);
+
+  // Função para finalizar a compra e resetar o contador
+  const finalizePurchase = () => {
+    dispatch(clearCart()); // Limpa o carrinho
+    closeCart(); // Fecha o carrinho
+  };
 
   return (
     <header className="header">
@@ -54,18 +64,35 @@ export function Header({ addToCartCount }: HeaderProps) {
             className="BagIcon"
           />
         </div>
-        <p>{addToCartCount}</p>
+        <p>{cartItemCount}</p> {/* Exibe o contador de itens no carrinho */}
       </div>
 
       {/* Exibe o carrinho quando isCartOpen for true */}
-      {isCartOpen && (
-        <>
-          <div className="cart-overlay" onClick={closeCart}/> {/* Camada de fundo escuro e blur */}
-          <div className="cart-container" onClick={(e) => e.stopPropagation()}> {/* Evita fechar o carrinho ao clicar dentro dele */}
-            <Cart closeCart={closeCart} />
-          </div>
-        </>
-      )}
+      <AnimatePresence>
+        {isCartOpen && (
+          <>
+            <motion.div
+              className="cart-overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={closeCart}
+            />
+            <motion.div
+              className="container-cart"
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 100 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Cart closeCart={closeCart} finalizePurchase={finalizePurchase} />
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
     </header>
   );
 }
