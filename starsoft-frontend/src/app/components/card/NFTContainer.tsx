@@ -6,11 +6,12 @@ import LoadingScreen from '../loading/Loading';
 
 interface NFT {
   id: number;
-  nome: string;
-  descricao: string;
-  preco: number | string;
-  imagem: string;
+  name: string;
+  description: string;
+  price: number | string;
+  image: string;
 }
+
 
 interface NFTContainerProps {
   setCartCount: Dispatch<SetStateAction<number>>;
@@ -58,12 +59,13 @@ export default function NFTContainer({ setCartCount }: NFTContainerProps) {
         nftsParaExibir.map((nft) => (
           <CardNFT
             key={nft.id}
-            nome={nft.nome}
-            descricao={nft.descricao}
-            preco={nft.preco}
-            imagem={nft.imagem || '/fallback-image.png'}
+            name={nft.name}
+            description={nft.description}
+            price={nft.price}
+            image={nft.image || '/fallback-image.png'}
             setCartCount={setCartCount}
           />
+
         ))
       )}
     </div>
