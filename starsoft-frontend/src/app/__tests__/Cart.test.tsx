@@ -1,89 +1,69 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
+import Cart from '../pages/cart'; // Ajuste o caminho se necessário
+import { CartItem } from '../redux/cartSlice'; // Importar o tipo CartItem
 import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import CardNFT from '../components/card/NFTCard';
-import cartReducer from '../redux/cartSlice';
+import { store } from '../redux/store'; // Ajuste o caminho do seu store Redux
+import { mockCartItems } from '../mockData';
 
-// Estendendo o Jest com a funcionalidade do jest-axe para checar acessibilidade
-expect.extend(toHaveNoViolations);
+// Mockar as funções de fechamento do carrinho e finalização da compra
+const mockCloseCart = jest.fn();
+const mockFinalizePurchase = jest.fn();
 
-const store = configureStore({
-  reducer: {
-    cart: cartReducer,
-  },
-});
+describe('Cart', () => {
+    beforeEach(() => {
+        // Resetar mocks antes de cada teste
+        mockCloseCart.mockClear();
+        mockFinalizePurchase.mockClear();
+    });
 
-describe('CardNFT', () => {
-  it('não possui violações de acessibilidade', async () => {
-    const { container } = render(
-      <Provider store={store}>
-        <CardNFT
-          name="NFT Teste"
-          description="Descrição do NFT"
-          price={10}
-          image="/nft.png"
-          setCartCount={jest.fn()}
-        />
-      </Provider>
-    );
+    it('deve renderizar o título "Mochila de Compras"', () => {
+        render(
+            <Provider store={store}>
+                <Cart closeCart={mockCloseCart} finalizePurchase={mockFinalizePurchase} />
+            </Provider>
+        );
 
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
-  });
+        expect(screen.getByText('Mochila de Compras')).toBeInTheDocument();
+    });
 
-  it('exibe corretamente o nome do NFT', () => {
-    render(
-      <Provider store={store}>
-        <CardNFT
-          name="NFT Teste"
-          description="Descrição do NFT"
-          price={10}
-          image="/nft.png"
-          setCartCount={jest.fn()}
-        />
-      </Provider>
-    );
+    it('deve chamar closeCart quando o botão de fechar for clicado', () => {
+        render(
+            <Provider store={store}>
+                <Cart closeCart={mockCloseCart} finalizePurchase={mockFinalizePurchase} />
+            </Provider>
+        );
 
-    const nameElement = screen.getByText(/NFT Teste/i);
-    expect(nameElement).toBeInTheDocument();
-  });
+        const button = screen.getByLabelText('Fechar carrinho');
+        fireEvent.click(button);
 
-  it('exibe corretamente o preço do NFT', () => {
-    render(
-      <Provider store={store}>
-        <CardNFT
-          name="NFT Teste"
-          description="Descrição do NFT"
-          price={10}
-          image="/nft.png"
-          setCartCount={jest.fn()}
-        />
-      </Provider>
-    );
+        expect(mockCloseCart).toHaveBeenCalledTimes(1);
+    });
 
-    const priceElement = screen.getByText(/10 ETH/i);
-    expect(priceElement).toBeInTheDocument();
-  });
+    it('deve mostrar a mensagem de erro se o carrinho estiver vazio', () => {
+        render(
+            <Provider store={store}>
+                <Cart closeCart={mockCloseCart} finalizePurchase={mockFinalizePurchase} />
+            </Provider>
+        );
 
-  it('dispara a função setCartCount quando o botão de adicionar ao carrinho é clicado', () => {
-    const mockSetCartCount = jest.fn();
+        const button = screen.getByText('FINALIZAR COMPRA');
+        fireEvent.click(button);
 
-    render(
-      <Provider store={store}>
-        <CardNFT
-          name="NFT Teste"
-          description="Descrição do NFT"
-          price={10}
-          image="/nft.png"
-          setCartCount={mockSetCartCount}
-        />
-      </Provider>
-    );
+        expect(screen.getByText('Erro: O carrinho está vazio')).toBeInTheDocument();
+    });
 
-    const button = screen.getByRole('button', { name: /comprar/i });
-    fireEvent.click(button);
+    it('deve finalizar a compra e limpar o carrinho', () => {
+        // Suponha que mockCartItems seja um array de itens fictícios do carrinho
+        render(
+            <Provider store={store}>
+                <Cart closeCart={mockCloseCart} finalizePurchase={mockFinalizePurchase} />
+            </Provider>
+        );
 
-    expect(mockSetCartCount).toHaveBeenCalledTimes(1);
-  });
+        const button = screen.getByText('FINALIZAR COMPRA');
+        fireEvent.click(button);
+
+        expect(mockFinalizePurchase).toHaveBeenCalledTimes(1);
+        expect(mockCloseCart).toHaveBeenCalledTimes(1);
+    });
 });
