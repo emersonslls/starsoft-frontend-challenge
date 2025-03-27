@@ -1,131 +1,105 @@
-# Teste para Desenvolvedor(a) Front-End Next.js
 
-## Introdução
-
-Bem-vindo(a) ao processo seletivo para a posição de **Desenvolvedor(a) Front-End** em nossa equipe! Este teste tem como objetivo avaliar suas habilidades técnicas em **Next.js**, **React** e as demais tecnologias mencionadas na descrição da vaga.
-
-## Instruções
-
-- Faça um **fork** deste repositório para o seu GitHub pessoal.
-- Desenvolva a aplicação conforme as especificações abaixo, seguindo as **melhores práticas de desenvolvimento**.
-- Após a conclusão, envie o link do seu repositório para avaliação.
-- Sinta-se à vontade para adicionar qualquer documentação ou comentários que julgar necessário.
-
-## Desafio
-
-### Contexto
-
-Você foi designado para desenvolver a interface de um **marketplace de NFTs** (Non-Fungible Tokens) com funcionalidades de carrinho de compras. O objetivo é criar uma aplicação web responsiva e interativa que proporcione uma ótima experiência ao usuário, utilizando **Next.js** como framework principal.
-
-### Requisitos
-
-1. **Uso do Next.js**
-
-   - Utilize **Next.js** como o framework principal da aplicação.
-   - Aproveite os recursos do Next.js, como:
-     - **Renderização no Lado do Servidor (SSR)** e/ou **Geração de Sites Estáticos (SSG)** para otimizar o carregamento das páginas.
-     - **Rotas Dinâmicas** para páginas de detalhes dos NFTs.
-     - **Next.js API Routes** se necessário para funcionalidades adicionais.
-     - **Otimização de Imagens** com o componente `next/image`.
-     - **Importação Dinâmica** para carregamento otimizado de componentes pesados.
-
-2. **Interface do Usuário**
-
-   - Implemente o design fornecido no link do **Figma**:
-     - [Figma Design](https://www.figma.com/design/j9HHfWPPoLyObtlVBeMhTD/Front-end-Challenge?node-id=0-1&t=sWwJ0qlYdwzJHKyJ-0)
-   - Siga fielmente o design e as especificações fornecidas.
-   - Garanta que a aplicação seja **responsiva** e funcione bem em diferentes tamanhos de tela.
-   - Implemente navegação entre as páginas utilizando o sistema de roteamento do Next.js.
-
-3. **Gerenciamento de Estado**
-
-   - Utilize **Redux** ou **Redux Toolkit** para gerenciar o estado global da aplicação.
-   - Configure a store do Redux e implemente os reducers necessários.
-   - Gerencie estados como itens no carrinho,
-
-4. **Busca de Dados**
-
-   - Use **React Query** para buscar e sincronizar dados da API.
-   - A API está documentada em:
-     - [Starsoft Challenge API Docs](https://starsoft-challenge-7dfd4a56a575.herokuapp.com/v1/docs)
-   - Implemente chamadas para obter a lista de NFTs, detalhes dos itens, etc.
-   - Utilize o **Data Fetching** do Next.js (`getStaticProps`, `getServerSideProps`) conforme adequado.
-   - Trate os estados de **loading**, **sucesso** e **erro** nas requisições.
-
-5. **Animações e Interações**
-
-   - Utilize **Framer Motion** para adicionar animações e interações conforme necessário.
-   - Garanta que as animações sejam suaves e contribuam para a experiência do usuário.
-   - Implemente animações em transições de página, hover em botões e cards, entre outros.
-
-6. **Estilização**
-
-   - Use **SASS** ou **Styled Components** para estilizar a aplicação.
-   - Organize os estilos de maneira modular e reutilizável.
-   - Siga as boas práticas de organização de arquivos e componentes.
-   - Garanta a consistência visual em toda a aplicação.
-
-7. **Configuração com Docker**
-
-   - Configure o ambiente de desenvolvimento utilizando **Docker** e **Docker Compose**.
-   - Crie um arquivo `Dockerfile` para a aplicação Next.js.
-   - Crie um arquivo `docker-compose.yml` para orquestrar os serviços necessários.
-   - A aplicação deve ser iniciada com um único comando (`docker-compose up`).
-   - Documente quaisquer configurações específicas necessárias.
-
-8. **Boas Práticas de Código**
-
-   - Aplique os princípios de **Clean Code** em toda a sua implementação.
-   - Utilize um padrão de código consistente e configure **ESLint** e **Prettier** no projeto.
-   - Documente o código quando necessário para melhorar a legibilidade.
-   - Utilize os recursos do **Next.js** para otimização, como importação dinâmica e otimização de imagens.
-
-9. **Testes**
-
-   - Escreva testes unitários e/ou de integração para as principais funcionalidades da aplicação utilizando **Jest** e **React Testing Library**.
-   - Os testes devem cobrir, no mínimo, os componentes principais e funcionalidades críticas.
-   - Garanta que todos os testes passem antes de enviar o projeto.
-
-### Diferenciais (Desejável)
-
-- **TypeScript**
-
-  - Utilize **TypeScript** para adicionar tipagem estática ao seu código, aumentando a robustez e manutenção do projeto.
-
-- **SEO e Acessibilidade**
-
-  - Implemente boas práticas de **SEO** e **acessibilidade** na aplicação.
-  - Utilize o componente `next/head` para manipulação de meta tags.
-  - Otimize a performance da aplicação seguindo as recomendações do **Lighthouse**.
-
-## Entrega
-
-- O código deve estar disponível em um repositório Git (preferencialmente **GitHub**) público.
-- Inclua um arquivo `README.md` com:
-  - Instruções claras sobre como configurar e executar a aplicação.
-  - Descrição das funcionalidades implementadas.
-  - Tecnologias utilizadas e justificativas de escolhas técnicas.
-  - Possíveis limitações ou melhorias futuras.
-- Certifique-se de que o histórico de commits reflita o andamento do desenvolvimento, com mensagens claras e objetivas.
-
-## Avaliação
-
-Os seguintes aspectos serão considerados na avaliação:
-
-- **Uso do Next.js**: Aproveitamento adequado dos recursos e features do Next.js na aplicação.
-- **Fidelidade ao Design**: A interface deve ser fiel ao design fornecido no Figma.
-- **Funcionalidade**: A aplicação deve estar funcional e todas as interações devem estar implementadas corretamente.
-- **Gerenciamento de Estado**: O uso de Redux para gerenciamento de estado deve ser eficiente e bem estruturado.
-- **Busca de Dados**: A integração com a API usando React Query e Next.js deve ser feita corretamente.
-- **Animações e Interações**: As animações devem ser suaves e bem integradas na experiência do usuário.
-- **Código Limpo**: O código deve ser limpo, seguindo boas práticas de desenvolvimento e princípios de Clean Code.
-- **Estilização**: A aplicação deve ser estilizada usando SASS de forma modular e reutilizável.
-- **Testes**: Qualidade e abrangência dos testes implementados.
-- **Configuração com Docker**: A configuração do ambiente de desenvolvimento utilizando Docker e Docker Compose deve ser clara e funcional.
-- **Documentação**: Clareza das instruções e documentação fornecidas no `README.md`.
-- **Histórico de Commits**: Uso adequado do Git com commits bem descritos.
-
----
-
-Boa sorte! Estamos ansiosos para conhecer o seu trabalho e potencial.
-
+ # Starsoft Front-End Challenge
+ 
+ Este repositório contém a solução para o desafio de Front-End da Starsoft, implementado utilizando **Next.js**, **React**, **Redux**, **React Query** e **SASS**.
+ 
+ ## 🚀 Instruções de Inicialização
+ 
+ ### 1. Clonando o Repositório
+ 
+ Primeiramente, clone o repositório para o seu ambiente local:
+ 
+ ```bash
+ git clone https://github.com/emersonslls/starsoft-frontend-challenge.git
+ ```
+ 
+ ### 2. Instalando Dependências
+ 
+ Após clonar o repositório, instale as dependências necessárias:
+ 
+ ```bash
+ npm install
+ ```
+ 
+ ### 3. Executando a Aplicação
+ 
+ Para rodar a aplicação localmente, execute o seguinte comando:
+ 
+ ```bash
+ npm run dev
+ ```
+ 
+ Isso irá iniciar o servidor de desenvolvimento em `http://localhost:3000`.
+ 
+ ## 🛠️ Tecnologias Utilizadas
+ 
+ - **Next.js**: Framework React para renderização do lado servidor e geração de páginas estáticas.
+ - **Redux**: Gerenciamento global de estado da aplicação.
+ - **React Query**: Para o gerenciamento de estado da API e otimização de consultas.
+ - **SASS**: Estilização modular e reutilizável da aplicação.
+ - **Docker**: Para configurar e rodar o ambiente de desenvolvimento de forma padronizada.
+ 
+ ## 🔧 Docker
+ 
+ ### 1. Construindo e Rodando a Aplicação com Docker
+ 
+ Certifique-se de que o **Docker** e **Docker Compose** estão instalados no seu sistema.
+ 
+ Para rodar o projeto utilizando Docker, execute o seguinte comando:
+ 
+ ```bash
+ docker-compose up --build
+ ```
+ 
+ Isso irá iniciar a aplicação em um contêiner Docker.
+ 
+ ### 2. Parando o Docker
+ 
+ Para parar os contêineres, execute:
+ 
+ ```bash
+ docker-compose down
+ ```
+ 
+ ## 🔄 Funcionalidades
+ 
+ - **Gerenciamento de Produtos**: A aplicação exibe uma lista de produtos, com funcionalidades de **adicionar**, **remover** e **editar**.
+ - **Busca de Produtos**: Utiliza **React Query** para realizar consultas eficientes à API de produtos.
+ - **Redux**: Utilizado para gerenciar o estado global da aplicação, como a lista de produtos e o status do carrinho de compras.
+ 
+ ## 📋 Testes
+ 
+ Adicionei testes para as interações principais da aplicação, utilizando **Jest** e **React Testing Library**. Para rodar os testes, use:
+ 
+ ```bash
+ npm run test
+ ```
+ 
+ ## ⚙️ Estrutura de Pastas
+ 
+ ```
+ /public
+     /images - Imagens utilizadas na aplicação
+ /src
+     /components - Componentes reutilizáveis
+     /pages - Páginas principais da aplicação
+     /redux - Estrutura do Redux (actions, reducers)
+     /styles - Arquivos SCSS
+     /api - Funções de acesso à API
+ /docker - Arquivos de configuração Docker
+ ```
+ 
+ ## 📝 Documentação do Código
+ 
+ O código foi desenvolvido seguindo as melhores práticas de **Clean Code**. Todos os componentes estão devidamente modularizados e a estrutura do Redux está otimizada para o gerenciamento eficiente do estado global.
+ 
+ ## 📦 Dependências
+ 
+ As dependências principais incluem:
+ 
+ - **Next.js**: Framework para React com renderização no lado servidor.
+ - **Redux**: Para gerenciamento de estado.
+ - **React Query**: Para gerenciamento de dados assíncronos.
+ - **SASS**: Para estilização modular.
+ - **Jest**: Para testes de unidade.
+ - **Docker**: Para configuração do ambiente.
