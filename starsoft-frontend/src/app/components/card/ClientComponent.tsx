@@ -5,8 +5,7 @@ import { useEffect, useState } from 'react';
 
 interface ClientProps {
   clientData: {
-    id: number;
-    name: string;
+    id: number;    name: string;
     // outras propriedades simples aqui
   };
 }
