@@ -88,18 +88,25 @@ export default function Cart({ closeCart, finalizePurchase }: CartProps) {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -50 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
+                    aria-live="assertive"
+                    role="dialog"
+                    aria-labelledby="cart-header"
                 >
                     <div className="container-cart">
                         <div className="header-cart">
-                            <button onClick={closeCart} className="btn-close">
+                            <button
+                                onClick={closeCart}
+                                className="btn-close"
+                                aria-label="Fechar carrinho"
+                            >
                                 <ArrowLeft size={28} className="icon" />
                             </button>
-                            <h1>Mochila de Compras</h1>
+                            <h1 id="cart-header">Mochila de Compras</h1>
                         </div>
 
                         <section className="container-infoCompra">
-                            <div className="container-itens">
-                                <div className="cart-item">
+                            <div className="container-itens" aria-labelledby="cart-items">
+                                <div className="cart-item" id="cart-items">
                                     {cartItems.map((item: CartItem) => (
                                         <div className="item" key={item.id}>
                                             <Image
@@ -126,11 +133,25 @@ export default function Cart({ closeCart, finalizePurchase }: CartProps) {
                                                 </div>
                                                 <div className='quantity-btn'>
                                                     <div className="quantity-control">
-                                                        <button onClick={() => dispatch(decreaseQuantity(item.id))}>-</button>
+                                                        <button
+                                                            onClick={() => dispatch(decreaseQuantity(item.id))}
+                                                            aria-label={`Diminuir quantidade de ${item.nome}`}
+                                                        >
+                                                            -
+                                                        </button>
                                                         <span>{item.quantidade}</span>
-                                                        <button onClick={() => dispatch(increaseQuantity(item.id))}>+</button>
+                                                        <button
+                                                            onClick={() => dispatch(increaseQuantity(item.id))}
+                                                            aria-label={`Aumentar quantidade de ${item.nome}`}
+                                                        >
+                                                            +
+                                                        </button>
                                                     </div>
-                                                    <button className="btn-remove" onClick={() => dispatch(removeFromCart(item.id))}>
+                                                    <button
+                                                        className="btn-remove"
+                                                        onClick={() => dispatch(removeFromCart(item.id))}
+                                                        aria-label={`Remover ${item.nome} do carrinho`}
+                                                    >
                                                         <Image
                                                             src={imageIconeDelete}
                                                             alt="Ícone Lixeira"
@@ -140,16 +161,13 @@ export default function Cart({ closeCart, finalizePurchase }: CartProps) {
                                                         />
                                                     </button>
                                                 </div>
-
                                             </div>
-
                                         </div>
                                     ))}
                                 </div>
-
                             </div>
 
-                            <div className="total">
+                            <div className="total" aria-live="polite">
                                 <h1>TOTAL</h1>
                                 <div className="preco-total">
                                     <Image
@@ -168,6 +186,7 @@ export default function Cart({ closeCart, finalizePurchase }: CartProps) {
                                 whileTap={{ scale: 0.95 }}
                                 whileHover={{ scale: 1.05 }}
                                 onClick={handleClick}
+                                aria-label="Finalizar compra"
                             >
                                 <AnimatePresence mode="wait">
                                     <motion.div
@@ -185,7 +204,6 @@ export default function Cart({ closeCart, finalizePurchase }: CartProps) {
                             <div className="contador-itens">
                                 <p>Itens no carrinho: {addToCartCount}</p>
                             </div>
-
                         </section>
                     </div>
                 </motion.div>

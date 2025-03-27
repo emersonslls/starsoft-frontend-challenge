@@ -19,9 +19,9 @@ export const useNFT = (id: string | number) => {
   return useQuery({
     queryKey: ['nft', id],
     queryFn: async () => {
-      const { data } = await axios.get(`${API_URL}?page=1&limit=100`);
-      return data.find((item: { id: number }) => item.id === Number(id));
+      const { data } = await axios.get(`${API_URL}/${id}`);
+      return data;
     },
-    enabled: !!id,
+    enabled: !!id, // Só faz a requisição se o ID for válido
   });
 };

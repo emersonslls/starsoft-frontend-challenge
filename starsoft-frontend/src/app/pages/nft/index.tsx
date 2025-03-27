@@ -1,34 +1,51 @@
+// src/app/pages/nft/index.tsx
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 
-"use client";
+interface Nft {
+  id: string;
+  name: string;
+  imageUrl: string;
+  price: number;
+}
 
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+// Função para buscar a lista de NFTs
+const fetchNfts = async (): Promise<Nft[]> => {
+  const response = await fetch('/api/nfts');
+  if (!response.ok) {
+    throw new Error('Erro ao buscar as NFTs');
+  }
+  return response.json();
+};
 
-export default function NftList() {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["nfts"],
-    queryFn: async () => {
-      const res = await axios.get("https://starsoft-challenge-7dfd4a56a575.herokuapp.com/v1/products?page=1&limit=20");
-      return res.data.data;
-    },
+const NftListPage = () => {
+  const { data, error, isLoading } = useQuery<Nft[], Error>({
+    queryKey: ['nfts'],
+    queryFn: fetchNfts,
   });
 
   if (isLoading) return <div>Carregando NFTs...</div>;
-  if (error instanceof Error) return <div>Erro ao carregar NFTs: {error.message}</div>;
+  if (error instanceof Error) return <div>Erro: {error.message}</div>;
 
   return (
     <div>
       <h1>Lista de NFTs</h1>
-      <ul>
-        {data?.map((nft: any) => (
-          <li key={nft.id}>
-            <a href={`/nft/${nft.id}`}>
-              <h2>{nft.name}</h2>
-              <img src={nft.imageUrl} alt={nft.name} width={100} />
-            </a>
-          </li>
+      <div>
+        {data?.map((nft) => (
+          <div key={nft.id}>
+            <Link href={`/nft/${nft.id}`}>
+              <a>
+                <h2>{nft.name}</h2>
+                <img src={nft.imageUrl} alt={nft.name} width={100} />
+                <p>Preço: ${nft.price}</p>
+              </a>
+            </Link>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
-}
+};
+
+export default NftListPage;

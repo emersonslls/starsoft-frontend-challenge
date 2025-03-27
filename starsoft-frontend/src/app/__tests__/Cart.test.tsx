@@ -1,16 +1,23 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import { Provider } from 'react-redux';
-import { store } from '../redux/store';  // Importe sua store Redux
+import { configureStore } from '@reduxjs/toolkit';
 import CardNFT from '../components/card/NFTCard';
+import cartReducer from '../redux/cartSlice';
 
 // Estendendo o Jest com a funcionalidade do jest-axe para checar acessibilidade
 expect.extend(toHaveNoViolations);
 
+const store = configureStore({
+  reducer: {
+    cart: cartReducer,
+  },
+});
+
 describe('CardNFT', () => {
   it('não possui violações de acessibilidade', async () => {
     const { container } = render(
-      <Provider store={store}>  {/* Envolvendo o componente com o Provider */}
+      <Provider store={store}>
         <CardNFT
           name="NFT Teste"
           description="Descrição do NFT"
@@ -27,7 +34,7 @@ describe('CardNFT', () => {
 
   it('exibe corretamente o nome do NFT', () => {
     render(
-      <Provider store={store}>  {/* Envolvendo o componente com o Provider */}
+      <Provider store={store}>
         <CardNFT
           name="NFT Teste"
           description="Descrição do NFT"
@@ -44,7 +51,7 @@ describe('CardNFT', () => {
 
   it('exibe corretamente o preço do NFT', () => {
     render(
-      <Provider store={store}>  {/* Envolvendo o componente com o Provider */}
+      <Provider store={store}>
         <CardNFT
           name="NFT Teste"
           description="Descrição do NFT"
@@ -63,7 +70,7 @@ describe('CardNFT', () => {
     const mockSetCartCount = jest.fn();
 
     render(
-      <Provider store={store}>  {/* Envolvendo o componente com o Provider */}
+      <Provider store={store}>
         <CardNFT
           name="NFT Teste"
           description="Descrição do NFT"

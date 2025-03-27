@@ -1,12 +1,14 @@
+// src/redux/store.ts
 import { configureStore } from '@reduxjs/toolkit';
-import cartReducer from './cartSlice';
+import cartReducer from './cartSlice';  // Seu reducer do carrinho (exemplo)
 
-
+// Criação da store
 export const store = configureStore({
   reducer: {
-    cart: cartReducer,
+    cart: cartReducer,  // Reducer do cart
   },
 });
 
-export type RootState = ReturnType<typeof store.getState>; // Aqui, pegamos o tipo do estado global
-export type AppDispatch = typeof store.dispatch; // Tipo do dispatch
+// Tipagem da store
+export type RootState = ReturnType<typeof store.getState>;  // Tipo do estado
+export type AppDispatch = typeof store.dispatch;  // Tipo do dispatch
