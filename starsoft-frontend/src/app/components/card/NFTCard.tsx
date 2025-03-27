@@ -71,7 +71,7 @@ const CardNFT = ({ name, description, price, image, setCartCount }: CardNFTProps
             height={200}
             className='nft'
             loading="lazy" 
-            onClick={() => setMostrarModal(true)} // <-- aqui
+            onClick={() => setMostrarModal(true)} // Ao clicar na imagem, abre o modal
             style={{ cursor: 'pointer' }}
           />
         </div>
@@ -97,6 +97,7 @@ const CardNFT = ({ name, description, price, image, setCartCount }: CardNFTProps
               whileTap={{ scale: 0.95 }}
               whileHover={{ scale: 1.05 }}
               onClick={handleClick}
+              aria-label="Adicionar ao carrinho"
             >
               <AnimatePresence mode="wait">
                 <motion.div
@@ -111,7 +112,7 @@ const CardNFT = ({ name, description, price, image, setCartCount }: CardNFTProps
               </AnimatePresence>
             </motion.button>
 
-            {/* Certifique-se de ter o componente SuccessMessage importado corretamente */}
+            {/* Exibição da mensagem de sucesso */}
             <SuccessMessage show={mostrarMensagem} onClose={() => setMostrarMensagem(false)} />
           </div>
         </div>
