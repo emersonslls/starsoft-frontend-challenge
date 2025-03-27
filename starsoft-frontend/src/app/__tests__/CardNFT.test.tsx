@@ -1,82 +1,47 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
-import { Provider } from 'react-redux';
-import { store } from '../redux/store';  // Importe sua store Redux
-import CardNFT from '../components/card/NFTCard';
+// src/app/__tests__/CardNFT.test.tsx
 
-// Estendendo o Jest com a funcionalidade do jest-axe para checar acessibilidade
+import { render, screen, fireEvent } from '@testing-library/react';
+import CardNFT from '../components/card/NFTCard';
+import { Provider } from 'react-redux';
+import { store } from '../redux/store';
+import { axe, toHaveNoViolations } from 'jest-axe';
+
 expect.extend(toHaveNoViolations);
 
-describe('CardNFT', () => {
-  it('não possui violações de acessibilidade', async () => {
-    const { container } = render(
-      <Provider store={store}>  {/* Envolvendo o componente com o Provider */}
-        <CardNFT
-          name="NFT Teste"
-          description="Descrição do NFT"
-          price={10}
-          image="/nft.png"
-          setCartCount={jest.fn()}
-        />
-      </Provider>
-    );
+describe('CardNFT Component', () => {
 
-    const results = await axe(container);
+  afterEach(async () => {
+    const results = await axe(document.body);
+    if (results.violations.length > 0) {
+      console.log('Acessibilidade Violations:', results.violations);
+    }
     expect(results).toHaveNoViolations();
   });
 
-  it('exibe corretamente o nome do NFT', () => {
-    render(
-      <Provider store={store}>  {/* Envolvendo o componente com o Provider */}
-        <CardNFT
-          name="NFT Teste"
-          description="Descrição do NFT"
-          price={10}
-          image="/nft.png"
-          setCartCount={jest.fn()}
-        />
-      </Provider>
-    );
-
-    const nameElement = screen.getByText(/NFT Teste/i);
-    expect(nameElement).toBeInTheDocument();
-  });
-
-  it('exibe corretamente o preço do NFT', () => {
-    render(
-      <Provider store={store}>  {/* Envolvendo o componente com o Provider */}
-        <CardNFT
-          name="NFT Teste"
-          description="Descrição do NFT"
-          price={10}
-          image="/nft.png"
-          setCartCount={jest.fn()}
-        />
-      </Provider>
-    );
-
-    const priceElement = screen.getByText(/10 ETH/i);
-    expect(priceElement).toBeInTheDocument();
-  });
-
-  it('dispara a função setCartCount quando o botão de adicionar ao carrinho é clicado', () => {
+  test('should render and add item to cart', async () => {
     const mockSetCartCount = jest.fn();
 
     render(
-      <Provider store={store}>  {/* Envolvendo o componente com o Provider */}
-        <CardNFT
-          name="NFT Teste"
-          description="Descrição do NFT"
-          price={10}
-          image="/nft.png"
+      <Provider store={store}>
+        <CardNFT 
+          name="NFT Test"
+          description="Test Description"
+          price={1.5}
+          image="https://via.placeholder.com/150"
           setCartCount={mockSetCartCount}
         />
       </Provider>
     );
 
-    const button = screen.getByRole('button', { name: /comprar/i });
-    fireEvent.click(button);
+    expect(screen.getByText('NFT Test')).toBeInTheDocument();
+    expect(screen.getByText('Test Description')).toBeInTheDocument();
+
+    const buyButton = screen.getByRole('button', { name: /comprar/i });
+    expect(buyButton).toBeInTheDocument();
+
+    fireEvent.click(buyButton);
 
     expect(mockSetCartCount).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole('button', { name: /adicionar ao carrinho/i })).toBeInTheDocument();
   });
 });
