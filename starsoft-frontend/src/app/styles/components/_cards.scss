@@ -230,3 +230,141 @@
         }
     }
 }
+
+/* !-- MODAL DAS INFORMAÇÕES DA NFT --! */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: var(--cinza-medio);
+    padding: 3rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+}
+
+.close-button {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    width: 40px;
+    height: 40px;
+    top: -20px;
+    left: -10px;
+    position: relative;
+    border-radius: 100%;
+    cursor: pointer;
+    border: none;
+    background-color: var(--laranja-principal);
+
+    .icon {
+        color: var(--branco-quase-total);
+    }
+}
+
+.nft-card {
+    width: 300px;
+    height: 300px;
+    top: -5px;
+    left: calc(50% - 300px/2);
+    position: relative;
+
+    border-radius: var(--borda);
+}
+
+.dados {
+    justify-content: center;
+    align-items: start;
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    top: -2px;
+    left: calc(50% - auto/2);
+    position: relative;
+
+    gap: 2px;
+
+    h2 {
+        width: auto;
+        height: 35px;
+
+        font-family: var(--font-principal);
+        font-size: var(--font-size-md);
+        font-weight: 700;
+        line-height: 35px;
+
+        color: var(--branco-quase-total);
+    }
+
+    p {
+        width: 95%;
+        height: auto;
+
+        font-family: var(--font-principal);
+        font-size: var(--font-size-xs);
+        font-weight: 500;
+        line-height: 20px;
+
+        color: var(--cinza-claro);
+    }
+}
+
+.preco {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 10px;
+
+    width: auto;
+    height: 29px;
+    top: 14px;
+    left: calc(50% - auto/2);
+    position: relative;
+
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+
+    .Ethereum {
+        width: 29px;
+        height: 29px;
+
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+    }
+
+    p {
+        width: auto;
+        height: 22px;
+
+        font-family: var(--font-principal);
+        font-style: normal;
+        font-weight: 600;
+        font-size: var(--font-size-sm);
+        line-height: 22px;
+
+        color: var(--branco-quase-total);
+
+        flex: none;
+        order: 1;
+        flex-grow: 0;
+    }
+}

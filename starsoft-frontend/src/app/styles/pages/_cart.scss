@@ -22,15 +22,13 @@
     width: 679px;
     height: 100vh;
     right: 0;
-    z-index: 99;
+    z-index: 999;
     background-color: var(--carvao-escuro);
     box-shadow: -29px 0px 9.8px rgba(0, 0, 0, 0.1);
 
     overflow-y: auto;
     overflow-x: hidden;
-    padding-top: 20px;
 }
-
 
 .header-cart {
     display: flex;
@@ -40,7 +38,9 @@
 
     width: 100%;
     height: 60px;
-    padding: 0 40px;
+    position: relative;
+    top: 40px;
+    left: 60px;
 
     .btn-close {
         justify-content: center;
@@ -278,7 +278,7 @@
                             }
 
                             span {
-                                width: 7px;
+                                width: auto;
                                 height: 20px;
 
                                 font-family: var(--font-principal);
@@ -363,7 +363,7 @@
             height: 34px;
             flex: none;
             order: 1;
-            flex-grow: 0;
+            flex-grow: 1;
             overflow: hidden;
 
             .Ethereum {
@@ -439,40 +439,237 @@
     .container-cart {
         width: 650px;
     }
-}
 
-@media (max-width: 1024px) {
-    .container-cart {
-        width: 550px;
+    .header-cart {
+        gap: 84px;
+
+        top: 30px;
+        left: 40px;
+    }
+
+    .container-infoCompra {
+        width: 590px;
+        margin: 30px auto 50px auto;
+        gap: 25px;
+
+        min-height: 480px;
+
+        .container-itens {
+            gap: 22px;
+            width: 590px;
+
+            min-height: 496px;
+
+            .cart-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 17px 30px;
+                gap: 27px;
+                width: 590px;
+                height: auto;
+
+                .item {
+                    max-width: 590px;
+                }
+            }
+        }
+
+
+        .total {
+            gap: 360px;
+
+            min-width: 560px;
+        }
+
+        .btn-finalizar {
+            padding: 10px 24px;
+
+            width: 590px;
+            height: 81px;
+            margin-top: 10px;
+
+            gap: 10px;
+        }
     }
 }
 
-@media (max-width: 780px) {
+@media (max-width: 430px) {
     .container-cart {
         width: 100%;
     }
 
     .header-cart {
-        gap: 60px;
-        width: 330px;
-        height: 40px;
-        left: calc(50% - 330px/2);
-        top: 45px;
+        gap: 40px;
+
+        height: 60px;
+        top: 30px;
+        left: 50px;
 
         .btn-close {
-            width: 40px;
-            height: 40px;
-
-            .icon {
-                width: 24px;
-                height: 24px;
-            }
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
         }
 
         h1 {
-            height: 26px;
             font-size: var(--font-size-md);
-            line-height: 22px;
+        }
+    }
+
+    .container-infoCompra {
+        width: 100%;
+        margin: 45px auto 40px auto;
+        padding: 0;
+        gap: 30px;
+
+        .container-itens {
+            gap: 20px;
+            width: 100%;
+
+            .cart-item {
+                padding: 10px 0 10px 0;
+                gap: 20px;
+                width: 100%;
+
+                .item {
+                    gap: 10px;
+                    width: 100%;
+                    height: 150px;
+
+                    .item-image {
+                        width: 120px;
+                        height: 120px;
+                    }
+
+                    .item-info {
+                        gap: 16px;
+
+                        width: 267px;
+                        height: 130px;
+
+                        .item-dados {
+                            gap: 2px;
+
+                            width: 267px;
+                            height: 38px;
+
+                            h3 {
+                                width: auto;
+                                height: 17px;
+
+                                font-size: var(--font-size-base);
+                                line-height: 17px;
+                            }
+
+                            p {
+                                width: 100%;
+                                height: auto;
+
+                                font-size: var(--font-size-xxs);
+                            }
+                        }
+
+                        .price-row {
+                            gap: 8px;
+
+                            width: auto;
+                            height: 24px;
+
+                            .Ethereum {
+                                width: 24px;
+                                height: 24px;
+                            }
+
+                            strong {
+                                width: auto;
+                                height: 20px;
+
+                                font-size: var(--font-size-sm);
+                                line-height: 20px;
+                            }
+                        }
+
+                        .quantity-btn {
+                            gap: 100px;
+
+                            width: 267px;
+                            height: 40px;
+
+                            .quantity-control {
+                                padding: 8px 4px;
+                                gap: 16px;
+
+                                width: 100px;
+                                height: 40px;
+                            }
+
+                            .btn-remove {
+                                justify-content: center;
+                                align-items: center;
+                                display: flex;
+                                width: 40px;
+                                height: 40px;
+
+                                background: var(--laranja-principal);
+
+                                .Delete {
+                                    width: 28px;
+                                    height: 28px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .total {
+            gap: 20px;
+            min-width: 80%;
+            height: 30px;
+
+            h1 {
+                width: auto;
+                height: 22px;
+
+                font-size: var(--font-size-md);
+                line-height: 22px;
+                flex-grow: 1;
+            }
+
+            .preco-total {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                padding: 0;
+                gap: 10px;
+
+                width: auto;
+                height: 34px;
+                flex: none;
+                order: 1;
+                flex-grow: 0;
+                overflow: hidden;
+
+                .Ethereum {
+                    width: 28px;
+                    height: 28px;
+                }
+
+                h2 {
+                    height: 22px;
+
+                    font-size: var(--font-size-md);
+                    line-height: 22px;
+                }
+            }
+        }
+
+        .btn-finalizar {
+            width: 100%;
         }
     }
 }
+

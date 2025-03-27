@@ -1,6 +1,6 @@
 export const fetchNFTs = async () => {
   try {
-    const response = await fetch('https://starsoft-challenge-7dfd4a56a575.herokuapp.com/v1/products?page=1&limit=8');
+    const response = await fetch('https://starsoft-challenge-7dfd4a56a575.herokuapp.com/v1/products?page=1&limit=20');
 
     
     if (!response.ok) {
@@ -26,7 +26,6 @@ export const fetchNFTs = async () => {
   }
 };
 
-// Função para buscar os dados de uma NFT específica
 export const fetchNFTDetails = async (id: string) => {
   const response = await fetch(`https://starsoft-challenge-7dfd4a56a575.herokuapp.com/v1/products/${id}`);
 

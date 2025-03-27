@@ -1,20 +1,20 @@
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 import { fetchNFTs } from '../../service/api';
 import CardNFT from './NFTCard';
-import { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import LoadingScreen from '../loading/Loading';
+import Button from '../button/Button';
 
 interface NFT {
-  id: number;
+  id: string;
   name: string;
   description: string;
-  price: number | string;
+  price: number;
   image: string;
 }
 
-
 interface NFTContainerProps {
-  setCartCount: Dispatch<SetStateAction<number>>;
+  setCartCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function NFTContainer({ setCartCount }: NFTContainerProps) {
@@ -24,39 +24,37 @@ export default function NFTContainer({ setCartCount }: NFTContainerProps) {
   });
 
   const [isDelayedLoading, setIsDelayedLoading] = useState(true);
+  const [page, setPage] = useState(0);  // Controla a página das NFTs
+  const itemsPerPage = 8;
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsDelayedLoading(false);
-    }, 5000); // Simula o atraso de 5 segundos
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
 
-  if (isError) {
-    console.error('Erro ao carregar as NFTs:', error);
-    return (
-      <div>
-        Erro ao carregar as NFTs: {error instanceof Error ? error.message : 'Erro desconhecido'}
-      </div>
-    );
-  }
+  if (isLoading || isDelayedLoading) return <LoadingScreen />;
+  if (isError) return <div>Erro: {error instanceof Error ? error.message : 'Erro desconhecido'}</div>;
+  if (!data) return null;
 
-  // Verificando os dados recebidos
-  console.log('NFTs recebidas:', data);
+  const totalNFTs = data.length;
+  const totalPages = Math.ceil(totalNFTs / itemsPerPage);  // Total de páginas
+  const start = page * itemsPerPage;
+  const end = start + itemsPerPage;
+  const nftsParaExibir = data.slice(start, end);
 
-  const nftsParaExibir = Array.isArray(data) && data.length ? data.slice(0, 8) : [];
-
-  if (isDelayedLoading || isLoading) {
-    return <LoadingScreen />;
-  }
+  // Lógica para alternar entre as páginas
+  const handleLoadMore = (totalNFTs: number) => {
+    const isLastPage = page >= totalPages - 1;
+    setPage(isLastPage ? 0 : page + 1); // Se for a última página, volta para a primeira, senão vai para a próxima
+  };
 
   return (
-    <div className="container-NFT">
-      {nftsParaExibir.length === 0 ? (
-        <div>Desculpe, nenhuma NFT disponível no momento. Tente novamente mais tarde.</div>
-      ) : (
-        nftsParaExibir.map((nft) => (
+    <>
+      <div className="container-NFT">
+        {nftsParaExibir.map((nft) => (
           <CardNFT
             key={nft.id}
             name={nft.name}
@@ -65,9 +63,11 @@ export default function NFTContainer({ setCartCount }: NFTContainerProps) {
             image={nft.image || '/fallback-image.png'}
             setCartCount={setCartCount}
           />
+        ))}
+      </div>
 
-        ))
-      )}
-    </div>
+      {/* Passa o número total de NFTs e a função para carregar mais */}
+      <Button visibleCount={nftsParaExibir.length} handleLoadMore={handleLoadMore} />
+    </>
   );
 }

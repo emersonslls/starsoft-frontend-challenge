@@ -7,6 +7,7 @@ import '../../styles/components/_cards.scss';
 import { motion, AnimatePresence } from 'framer-motion';
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { ArrowLeft } from "lucide-react";
 
 import imageIcone from '../../../../public/assets/Icons/Ethereum.svg';
 
@@ -33,6 +34,7 @@ const CardNFT = ({ name, description, price, image, setCartCount }: CardNFTProps
   const [estadoBotao, setEstadoBotao] = useState<'comprar' | 'adicionar'>('comprar');
   const [mensagemSucesso, setMensagemSucesso] = useState(false);
   const [mostrarMensagem, setMostrarMensagem] = useState(false);
+  const [mostrarModal, setMostrarModal] = useState(false);
 
   const handleClick = () => {
     if (estadoBotao === 'comprar') {
@@ -67,7 +69,9 @@ const CardNFT = ({ name, description, price, image, setCartCount }: CardNFTProps
             width={200}
             height={200}
             className='nft'
-            unoptimized
+            loading="lazy" 
+            onClick={() => setMostrarModal(true)} // <-- aqui
+            style={{ cursor: 'pointer' }}
           />
         </div>
       </div>
@@ -111,6 +115,53 @@ const CardNFT = ({ name, description, price, image, setCartCount }: CardNFTProps
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {mostrarModal && (
+          <motion.div
+            className="modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setMostrarModal(false)}
+          >
+            <motion.div
+              className="modal-content"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <button className="close-button" onClick={() => setMostrarModal(false)}>
+                <ArrowLeft size={28} className="icon" />
+              </button>
+              <Image
+                src={image}
+                alt={name}
+                width={300}
+                height={300}
+                unoptimized 
+                loading="lazy" 
+                className='nft-card'/>
+              <div className='dados'>
+                <h2>{name}</h2>
+                <p>{description}</p>
+              </div>
+              <div className='preco'>
+                <Image
+                  src={imageIcone}
+                  alt="Ícone Ethereum"
+                  width={30}
+                  height={30}
+                  className="Ethereum"
+                />
+                <p>{formatarPreco(price)} ETH</p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </div>
   );
 };
