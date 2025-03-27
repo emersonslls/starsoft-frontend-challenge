@@ -1,3 +1,5 @@
+"use client";
+
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/app/redux/store'; // Importe o estado global do Redux
 import { clearCart } from '@/app/redux/cartSlice'; // Importe a ação clearCart
